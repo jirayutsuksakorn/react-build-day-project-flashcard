@@ -5,10 +5,13 @@ import Answer from './components/Answer'
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <Answer
-            isCorrect={true}
-            countryName="Peru" // ลองเปลี่ยนเป็นประเทศอื่นในกลุ่มของคุณ
-            imageUrl="/src/assets/images/category/south-america/ecuador.jpg" // เปลี่ยน Path รูปให้ตรงกัน
-            onNext={() => console.log("ไปข้อถัดไป!")}
+            current={0}
+            onNext={() => console.log("คลิกไปต่อ!")}
+            // [จุดสำคัญ] ต้องส่งเป็นก้อน selected แบบนี้ถึงจะไม่ขาว
+            selected={{
+                isCorrect: true,
+                countryName: "Peru"
+            }}
         />
     </React.StrictMode>
 )
