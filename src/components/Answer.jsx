@@ -1,117 +1,82 @@
 import React from 'react';
 
-/**
- * @param {Object} result - Parameter ตัวที่ 1: เก็บข้อมูลผลลัพธ์ (isCorrect, countryName, imageUrl)
- * @param {Number} index - Parameter ตัวที่ 2: ลำดับข้อ (รับมาจากเปรม)
- * @param {Function} onNext - ฟังก์ชันกดไปต่อ (รับมาจากแก็ป)
- */
-function Answer({ result = {}, index, onNext }) {
-    // ดึงค่าออกจาก result มาใช้งาน
-    const { isCorrect, countryName, imageUrl } = result;
+function Answer({ current, selected, answers, handleSelected }) {
 
+    // 1. ป้องกันหน้าขาว: ถ้า selected เป็น null ให้หยุดทำงานตรงนี้ (Return null)
+    if (!selected) {
+        return null;
+    }
+
+    // 2. ใช้ if-else กำหนดค่า (ประกาศตัวแปรไว้รอรับค่า)
+    let title = "";
+    let message = "";
+    let themeColor = "";
+
+    if (selected.isCorrect === true) {
+        title = "Correct!";
+        message = "ยอดเยี่ยมมาก " + selected.countryName + " คือคำตอบที่ถูก";
+        themeColor = "#1a1a1a";
+    } else {
+        title = "Incorrect";
+        message = "คำตอบยังไม่ถูก ลองพยายามใหม่อีกครั้ง";
+        themeColor = "#2d1a1a";
+    }
+
+    // 3. ส่วนการแสดงผล (นำตัวแปรทุกตัวมาวางในนี้ เส้นแดงข้างบนจะหายไปทันที)
     return (
-        <div style={styles.wrapper}>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100vw',
+            height: '100vh',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            backgroundColor: themeColor, // ใช้ themeColor แล้ว (เส้นแดงบรรทัด 13 หาย)
+            color: 'white',
+            zIndex: 9999
+        }}>
             <div style={{
-                ...styles.card,
-                // เปลี่ยนสีพื้นหลังตามสถานะ true/false
-                backgroundColor: isCorrect ? '#1a1a1a' : '#2d1a1a'
+                textAlign: 'center',
+                padding: '40px',
+                borderRadius: '30px',
+                border: '1px solid #444',
+                maxWidth: '400px',
+                width: '90%'
             }}>
+                {/* ใช้ current และ answers (เส้นแดงที่พารามิเตอร์หาย) */}
+                <p style={{ color: '#888', fontSize: '14px' }}>
+                    QUESTION {current + 1} OF {answers?.length || 0}
+                </p>
 
-                {/* ส่วนที่ 1: รูปภาพเฉลย (Reveal Answer) - แสดงเฉพาะเมื่อตอบถูก */}
-                {isCorrect && (
-                    <div style={styles.imageContainer}>
-                        <img
-                            src={imageUrl}
-                            alt={countryName}
-                            style={styles.bgImage}
-                        />
-                        <div style={styles.gradientOverlay}></div>
-                    </div>
-                )}
+                {/* ใช้ title (เส้นแดงบรรทัด 11 หาย) */}
+                <h1 style={{ fontSize: '32px', margin: '10px 0' }}>{title}</h1>
 
-                {/* ส่วนที่ 2: เนื้อหาข้อมูล */}
-                <div style={styles.content}>
+                <h2 style={{ fontSize: '48px', fontWeight: 'bold', margin: '20px 0' }}>
+                    {selected.countryName}
+                </h2>
 
-                    {/* แสดงลำดับข้อปัจจุบัน (หน้าที่ของเปรม) */}
-                    <div style={styles.indexTag}>
-                        QUESTION #{index + 1}
-                    </div>
+                {/* ใช้ message (เส้นแดงบรรทัด 12 หาย) */}
+                <p style={{ marginBottom: '30px', color: '#ccc' }}>{message}</p>
 
-                    {/* Badge แสดงสถานะ Success / Failed */}
-                    <div style={{
-                        ...styles.statusBadge,
-                        backgroundColor: isCorrect ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-                        color: isCorrect ? '#4ade80' : '#f87171',
-                        border: `1px solid ${isCorrect ? '#4ade80' : '#f87171'}`
-                    }}>
-                        {isCorrect ? '✓ DISCOVERY SUCCESS' : '✕ EXPLORATION FAILED'}
-                    </div>
-
-                    <div style={styles.textGroup}>
-                        {isCorrect ? (
-                            <>
-                                <span style={styles.subTitle}>DESTINATION REVEALED</span>
-                                <h1 style={styles.mainTitle}>{countryName}</h1>
-                                <div style={styles.decorativeLine}></div>
-                            </>
-                        ) : (
-                            <h1 style={{ ...styles.mainTitle, fontSize: '32px', textTransform: 'none' }}>
-                                อุ๊ย! คำตอบยังไม่ถูกต้อง
-                            </h1>
-                        )}
-                    </div>
-
-                    <div style={styles.descriptionBox}>
-                        <p style={styles.description}>
-                            {isCorrect
-                                ? `เก่งมากคุณการ์ด! คุณรู้จัก ${countryName} เป็นอย่างดี`
-                                : "ไม่ต้องเสียใจไป ลองรวบรวมสมาธิแล้วไปลุยใหม่ข้อหน้า!"
-                            }
-                        </p>
-                    </div>
-
-                    {/* ปุ่มกดไปต่อ (หน้าที่ของแก็ป) */}
-                    <button
-                        className="next-button"
-                        style={styles.nextButton}
-                        onClick={onNext}
-                    >
-                        {isCorrect ? 'CONTINUE JOURNEY' : 'TRY AGAIN'}
-                    </button>
-                </div>
+                <button
+                    onClick={handleSelected} // ใช้ onNext แล้ว
+                    style={{
+                        padding: '15px 40px',
+                        borderRadius: '50px',
+                        border: 'none',
+                        backgroundColor: 'white',
+                        color: 'black',
+                        fontWeight: 'bold',
+                        cursor: 'pointer'
+                    }}
+                >
+                    {selected.isCorrect ? "NEXT" : "RETRY"}
+                </button>
             </div>
-
-            {/* Animation ส่วนตัวของการ์ด */}
-            <style>
-                {`
-                @keyframes zoomIn { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-                @keyframes slideUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
-                .next-button { transition: all 0.3s ease !important; }
-                .next-button:hover { 
-                    background-color: #f0f0f0 !important; 
-                    transform: scale(1.05);
-                }
-                `}
-            </style>
         </div>
     );
 }
-
-const styles = {
-    wrapper: { display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, background: '#000000', zIndex: 999, overflow: 'hidden' },
-    card: { width: '90%', maxWidth: '400px', height: '600px', position: 'relative', borderRadius: '30px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.5)', animation: 'slideUp 0.6s ease' },
-    imageContainer: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 },
-    bgImage: { width: '100%', height: '100%', objectFit: 'cover', animation: 'zoomIn 10s infinite alternate ease-in-out' },
-    gradientOverlay: { position: 'absolute', bottom: 0, width: '100%', height: '70%', background: 'linear-gradient(to top, rgba(0,0,0,1) 20%, transparent 100%)' },
-    content: { position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '35px', color: 'white', fontFamily: "'Prompt', sans-serif" },
-    indexTag: { position: 'absolute', top: '35px', left: '35px', fontSize: '14px', fontWeight: 'bold', color: 'rgba(255,255,255,0.5)', letterSpacing: '2px' },
-    statusBadge: { alignSelf: 'flex-start', padding: '6px 14px', borderRadius: '100px', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '15px' },
-    subTitle: { fontSize: '10px', letterSpacing: '4px', color: '#bbb', display: 'block' },
-    mainTitle: { fontSize: '42px', fontWeight: 'bold', margin: '5px 0', lineHeight: '1.1' },
-    decorativeLine: { width: '40px', height: '4px', backgroundColor: '#fff', margin: '15px 0' },
-    descriptionBox: { marginBottom: '30px' },
-    description: { fontSize: '13px', lineHeight: '1.6', color: '#ccc', margin: 0 },
-    nextButton: { background: 'white', color: 'black', border: 'none', padding: '16px 25px', borderRadius: '100px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', letterSpacing: '1px' }
-};
 
 export default Answer;
