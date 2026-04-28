@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { asia } from "../mock-data/asia";
-
-import CurrentQuestion from './CurrentQuestion';
+import CurrentQuestion from "../components/CurrentQuestion";
+import Answer from "../components/Answer";
 
 export default function Quiz() {
   const [index, setIndex] = useState(0);
@@ -22,6 +22,7 @@ export default function Quiz() {
         <button className="cursor-pointer flex-1 text-white px-5 py-2 rounded bg-slate-400 hover:bg-sky-700" onClick={() => handleAnswer(true)}>{item.correctCapital}</button>
         <button className="cursor-pointer flex-1 text-white px-5 py-2 rounded bg-slate-400 hover:bg-sky-700" onClick={() => handleAnswer(false)}>{item.wrongOption}</button>
       </div>
+      <CurrentQuestion current={index} total={asia.length} />
     </div>
   );
 }
