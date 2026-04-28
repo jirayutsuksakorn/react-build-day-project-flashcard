@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { asia } from "../mock-data/asia";
 import CurrentQuestion from "../components/CurrentQuestion";
-import TrackScore from "./TrackScore";
+import TrackScore from "../components/TrackScore";
 import Answer from "../components/Answer";
 
 export default function Quiz() {
@@ -25,7 +25,7 @@ export default function Quiz() {
   return (
     <div className="flex flex-col gap-5 p-5 rounded-2xl bg-white shadow-xl/5">
       <h2 className="text-2xl text-slate-500 pb-4 border-b border-slate-200">What is the capital of {item.country}?</h2>
-      <img className="object-cover w-100 h-50 rounded-lg" src={`../assets/images/category/asia/${item.country.toLowerCase().replace(/ /g, '-')}.jpg`}/>
+      <img className="object-cover w-100 h-50 rounded-lg" src={`./src/assets/images/category/asia/${item.country.toLowerCase().replace(/ /g, '-')}.jpg`}/>
       <div className="flex gap-5">
         <button className="cursor-pointer flex-1 text-white px-5 py-2 rounded bg-slate-400 hover:bg-sky-700" onClick={() => handleAnswer(true)}>{item.correctCapital}</button>
         <button className="cursor-pointer flex-1 text-white px-5 py-2 rounded bg-slate-400 hover:bg-sky-700" onClick={() => handleAnswer(false)}>{item.wrongOption}</button>
