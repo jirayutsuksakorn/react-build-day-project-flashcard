@@ -1,10 +1,6 @@
-import { useState } from 'react'
-
-function App() {
+export default function App() {
 
   return (
-    <section>test</section>
+    <main>App.jsx page</main>
   )
-}
-
-export default App
+};

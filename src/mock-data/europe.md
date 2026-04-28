@@ -1,4 +1,4 @@
-England: London
+UK: London
 France: Paris
 Germany: Berlin
 Italy: Rome
