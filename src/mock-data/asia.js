@@ -1,4 +1,4 @@
-export const capitalsQuiz = [
+export const asia = [
   {
     id: "1",
     country: "Thailand",
