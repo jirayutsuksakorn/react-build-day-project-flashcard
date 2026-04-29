@@ -32,11 +32,10 @@ export default function Quiz() {
       </div>
       <div className="flex justify-between">
         <div>
-          <span>Current Question:
-          <CurrentQuestion current={index} total={asia.length} /></span>
+          <span>Current Question:</span>
+          <CurrentQuestion current={index} total={asia.length} />
         </div>
         <div>
-          <span>Track Score:</span>
           <TrackScore score={score} total={asia.length} />
         </div>
       </div>

@@ -1,5 +1,5 @@
 // ไฟล์ TrackScore.jsx
-const TrackScore = ({ score, total }) => {
+export default function TrackScore ({ score, total }) {
   // score คือ คะแนนที่แม่นับมาให้แล้ว (นับเฉพาะที่ตอบ true)
   // total คือ จำนวนข้อทั้งหมด
   
@@ -15,5 +15,3 @@ const TrackScore = ({ score, total }) => {
     </div>
   );
 };
-
-export default TrackScore;
