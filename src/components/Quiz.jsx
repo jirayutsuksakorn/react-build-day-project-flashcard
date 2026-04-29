@@ -38,7 +38,7 @@ export default function Quiz() {
           <TrackScore score={score} total={asia.length} />
         </div>
       </div>
-      {selected !== null && <Answer current={index} selected={selected} answers={answers} handleSelected={handleSelected} />}
+      {selected && <div><Answer current={index} selected={selected} answers={answers} handleSelected={handleSelected} /></div>}
     </div>
   );
 }
