@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { asia } from "../mock-data/asia";
 import CurrentQuestion from "../components/CurrentQuestion";
-import TrackScore from "../components/TrackScore";
+//import TrackScore from "../components/TrackScore";
 import Answer from "../components/Answer";
 
 export default function Quiz() {
@@ -37,7 +37,7 @@ export default function Quiz() {
         </div>
         <div>
           <span>Track Score:</span>
-          <TrackScore score={score} total={asia.length} />
+          {/*<TrackScore score={score} total={asia.length} />*/}
         </div>
       </div>
       {selected && <Answer current={index} selected={selected} answers={answers} handleSelected={handleSelected} />}
