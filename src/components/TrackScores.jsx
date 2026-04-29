@@ -1,4 +1,4 @@
-// ไฟล์ TrackScore.jsx
+// ไฟล์ TrackScore.jsx //
 export default function TrackScore ({ score, total }) {
   // score คือ คะแนนที่แม่นับมาให้แล้ว (นับเฉพาะที่ตอบ true)
   // total คือ จำนวนข้อทั้งหมด

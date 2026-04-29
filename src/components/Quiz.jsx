@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { asia } from "../mock-data/asia";
 import CurrentQuestion from "../components/CurrentQuestion";
-import TrackScore from "../components/TrackScore";
+import TrackScore from "./TrackScores";
 import Answer from "../components/Answer";
 
 export default function Quiz() {
@@ -10,13 +10,12 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const item = asia[index];
-
+  //
   const handleAnswer = (value) => {
     setAnswers(value);
     setSelected(true);
     if (value) setScore(score + 1);
   };
-  
   const handleSelected = () => {
     setSelected(false);
     setIndex(index + 1);
